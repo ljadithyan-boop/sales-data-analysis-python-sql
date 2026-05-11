@@ -1,131 +1,156 @@
-# 🐍 Sales Data Analysis — Python & SQL
+# 🛒 Behind the Cart — RetailSales Analytics Dashboard
 
-> A full data analysis pipeline on a 10,000+ row e-commerce dataset using Python (Pandas), MySQL, and Power BI — covering data cleaning, EDA, SQL querying, and visualization.
+![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=flat&logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?style=flat&logo=pandas&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?style=flat&logo=sqlite&logoColor=white)
+![Power BI](https://img.shields.io/badge/Power%20BI-Dashboard-F2C811?style=flat&logo=powerbi&logoColor=black)
+![Status](https://img.shields.io/badge/Status-Completed-2ea44f?style=flat)
 
----
-
-## 🔍 Project Overview
-
-This project simulates a real-world data analyst workflow: raw data comes in, gets cleaned and explored in Python, queried deeply with SQL, and finally visualized in Power BI. Each stage mirrors what an analyst does on the job.
-
----
-
-## 🛠️ Tools & Technologies
-
-| Tool | Usage |
-|------|-------|
-| Python (Pandas, NumPy) | Data loading, cleaning, EDA |
-| MySQL | Advanced querying and aggregation |
-| DB Browser for SQLite | Local database management |
-| Power BI | Final visualization layer |
-| Superstore Dataset | Source data (10,000+ rows) |
+> End-to-end retail sales analytics pipeline — from raw Excel data to an interactive Power BI dashboard — built as a BCA Final Year Project at IZEE Business School, Bengaluru (2026).
 
 ---
 
-## 📌 Key Highlights
+## 📌 Project Overview
 
-- **Cleaned a 10,000+ row dataset** — handled nulls, duplicates, and date parsing
-- **5-dimension EDA** — category sales, top products, monthly trends, regional profit, customer segments
-- **10+ Advanced SQL Queries** — JOINs, GROUP BY, subqueries, CTEs, and window functions
-- **End-to-end pipeline** — raw CSV → cleaned data → SQL analysis → Power BI output
+Most retail businesses collect thousands of transactions but fail to analyse them effectively. **Behind the Cart** bridges that gap by building a complete data analytics pipeline that transforms raw sales data into actionable business intelligence.
+
+**Dataset:** 500 retail transactions across 4 categories, 4 regions, and 6 salespersons — FY 2024.
 
 ---
 
-## 📂 Project Structure
+## 🔧 Tech Stack
+
+| Tool | Purpose |
+|------|---------|
+| Microsoft Excel | Raw data source |
+| Python 3 + pandas | Data cleaning, transformation, EDA |
+| matplotlib | Chart generation |
+| SQLite | Relational database storage |
+| SQL (12 queries) | Business analysis queries |
+| Microsoft Power BI | Interactive dashboard |
+
+---
+
+## 🗂️ Project Structure
 
 ```
-├── data/
-│   ├── superstore_raw.csv          # Original dataset
-│   └── superstore_cleaned.csv      # Cleaned output from Python
+sales-data-analysis-python-sql/
 │
-├── python/
-│   ├── 01_data_cleaning.py         # Null handling, deduplication, date parsing
-│   └── 02_eda_analysis.py          # Exploratory data analysis + charts
+├── 📁 data/
+│   ├── superstore_raw..xlsx          # Raw dataset (500 rows × 11 columns)
+│   └── superstore_cleaned.csv        # Cleaned data exported for Power BI
 │
-├── sql/
-│   ├── 01_basic_queries.sql        # SELECT, WHERE, ORDER BY
-│   ├── 02_aggregations.sql         # GROUP BY, HAVING, COUNT, SUM
-│   ├── 03_joins_subqueries.sql     # JOINs and nested queries
-│   └── 04_cte_advanced.sql         # CTEs and multi-step analysis
+├── 📁 scripts/
+│   ├── 01_data_cleaning.py           # Data ingestion, cleaning & SQLite export
+│   ├── 02_eda_analysis.py            # EDA, groupby analysis & chart generation
+│   └── 01_sales_schema..sql          # 12 SQL queries for business analysis
 │
-├── dashboard/
-│   └── Sales_Analysis.pbix         # Power BI file using cleaned data
+├── 📁 database/
+│   └── sales_database.db             # SQLite database (open in DB Browser)
+│
+├── 📁 dashboard/
+│   └── Sales_Dashboard.pbix          # Power BI dashboard file
+│
+├── 📁 visuals/
+│   ├── BehindTheCart_v3_Final.pptx   # Final presentation deck (15 slides)
+│   └── sales_charts.png              # 4 matplotlib charts (PNG export)
 │
 └── README.md
 ```
 
 ---
 
-## 🔬 Analysis Breakdown
+## ⚙️ How to Run
 
-### Stage 1 — Data Cleaning (Python)
-- Loaded CSV using `pd.read_csv()`
-- Identified and filled null values in key columns
-- Removed 150+ duplicate records
-- Parsed `Order Date` and `Ship Date` into proper datetime format
-- Exported cleaned file for SQL and Power BI use
-
-### Stage 2 — Exploratory Data Analysis (Python)
-- Sales by Category and Sub-Category
-- Top 10 products by total revenue
-- Monthly sales trend (2018–2021)
-- Regional profit comparison
-- Customer segment contribution to revenue
-
-### Stage 3 — SQL Analysis (MySQL)
-- Total revenue and profit by region using `GROUP BY`
-- Top customers by order value using `ORDER BY + LIMIT`
-- Month-over-month sales using date functions
-- Category profit ranking using CTEs
-- Multi-table JOINs to combine order and customer data
-
-### Stage 4 — Visualization (Power BI)
-- Imported cleaned CSV into Power BI
-- Built visual layer on top of the Python-SQL pipeline
-- Reused DAX measures from the Sales Dashboard project
-
----
-
-## 💡 Sample SQL Query
-
-```sql
--- Top 5 regions by profit margin using CTE
-WITH region_summary AS (
-    SELECT 
-        Region,
-        SUM(Sales)  AS total_sales,
-        SUM(Profit) AS total_profit
-    FROM superstore
-    GROUP BY Region
-)
-SELECT 
-    Region,
-    total_sales,
-    total_profit,
-    ROUND((total_profit / total_sales) * 100, 2) AS profit_margin_pct
-FROM region_summary
-ORDER BY profit_margin_pct DESC
-LIMIT 5;
+### 1. Clone the repo
+```bash
+git clone https://github.com/ljadithyan-boop/sales-data-analysis-python-sql.git
+cd sales-data-analysis-python-sql
 ```
 
+### 2. Install dependencies
+```bash
+pip install pandas matplotlib openpyxl
+```
+
+### 3. Run the pipeline
+```bash
+# Step 1 — Clean data and load into SQLite
+python scripts/01_data_cleaning.py
+
+# Step 2 — Run EDA and generate charts
+python scripts/02_eda_analysis.py
+```
+
+### 4. Explore the database
+Open `database/sales_database.db` in [DB Browser for SQLite](https://sqlitebrowser.org/) and run the queries from `scripts/01_sales_schema..sql`.
+
+### 5. Open the dashboard
+Open `dashboard/Sales_Dashboard.pbix` in Power BI Desktop.
+
 ---
 
-## 💡 What I Learned
+## 📊 Key Findings
 
-- Building a multi-stage data pipeline from scratch
-- Writing production-style SQL for business reporting
-- Combining Python EDA output with SQL for deeper analysis
-- Structuring a data project so others can read and reuse it
+| Metric | Value |
+|--------|-------|
+| Total Revenue | ₹10,017K |
+| Total Orders | 500 |
+| Avg Order Value | ₹20,034 |
+| Top Salesperson | Priya (₹2,071K) |
+| Top Category | Electronics (82.3% revenue share) |
+| Top Region | North (33.5% revenue share) |
+
+### Insights
+- **Electronics dominates** with 82% of revenue — driven by high unit-price products like laptops and phones
+- **North region leads** with 33.5% share; West lags at 18.9% — a clear growth opportunity
+- **Q4 recovery** — Nov–Dec surge signals seasonal demand peaks worth planning inventory around
+- **Balanced sales team** — all 6 reps within ₹850K of each other; coaching bottom 2 can close the gap
+- **Grocery gap** — only ₹63K revenue; SKU relevance needs urgent review
 
 ---
 
-## 📬 Connect
+## 🗃️ SQL Queries Covered
 
-**Adithyan L J**  
-📧 ljadithyan@gmail.com  
-🔗 [LinkedIn](https://www.linkedin.com/in/adithyan-lj-378181332)  
-💻 [GitHub](https://github.com/adithyanlj)
+- Total revenue, orders, avg order value
+- Revenue by category, region, salesperson
+- Monthly revenue trend
+- Top 5 best-selling products
+- Discount impact analysis
+- Customer lifetime value
+- Revenue contribution % per category
+- Created a reusable `VIEW` for monthly category sales
 
 ---
 
-> *Built as part of my Data Analyst portfolio — BCA Final Year, IZEE Business School, Bengaluru*
+## 📁 Deliverables
+
+- ✅ `01_data_cleaning.py` — automated cleaning pipeline
+- ✅ `02_eda_analysis.py` — full exploratory analysis
+- ✅ `01_sales_schema..sql` — 12 business SQL queries
+- ✅ `sales_database.db` — structured SQLite database
+- ✅ `Sales_Dashboard.pbix` — interactive Power BI dashboard
+- ✅ `BehindTheCart_v3_Final.pptx` — 15-slide presentation deck
+
+---
+
+## ⚠️ Limitations
+
+- Dataset is **synthetic** (simulated, not from a live retail system)
+- **No real-time data** — static FY 2024 snapshot only
+- **No predictive model** — descriptive and diagnostic analysis only
+- **No profitability data** — revenue tracked, not cost or margin
+
+---
+
+## 👤 Author
+
+**Adithyan L J**
+BCA Final Year · Data Analytics · IZEE Business School, Bengaluru (2023–2026)
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat&logo=linkedin)](https://linkedin.com/in/adithyan-lj-378181332)
+[![Email](https://img.shields.io/badge/Email-ljadithyan%40gmail.com-EA4335?style=flat&logo=gmail)](mailto:ljadithyan@gmail.com)
+
+---
+
+*Built with Python, SQL, and Power BI as part of BCA Final Year Project — 2026*
